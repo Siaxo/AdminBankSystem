@@ -29,6 +29,7 @@ namespace AdminBankSystem.Pages
         {
             CustomerAmount = _context.Customers.Count();
             AccountAmount = _context.Accounts.Count();
+            BalanceAmount = _context.Transactions.Count();
         }
     }
 }
