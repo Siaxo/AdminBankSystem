@@ -1,4 +1,5 @@
 ﻿using AdminBankSystem.Models;
+using AdminBankSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -9,16 +10,20 @@ namespace AdminBankSystem.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly BankContext _context;
+        private readonly IPageService _pageService;
 
-        public IndexModel(ILogger<IndexModel> logger, BankContext context)
+        public IndexModel(ILogger<IndexModel> logger, BankContext context, IPageService pageService)
         {
             _logger = logger;
             _context = context;
+            _pageService = pageService;
         }
 
         public int CustomerAmount { get; set; }
         public int AccountAmount { get; set; }
         public int BalanceAmount { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
         
 
         public class CustomerViewModel
@@ -26,7 +31,7 @@ namespace AdminBankSystem.Pages
             public int Id { get; set; }
             public string Name { get; set; }
             public string Address { get; set; }
-            public string SocialSecurtity { get; set; }
+            public string SocialSecurity { get; set; }
             public string City { get; set; }
         }
 
@@ -36,7 +41,7 @@ namespace AdminBankSystem.Pages
 
 
 
-        public void OnGet()
+        public void OnGet(int pageno)
         {
             CustomerAmount = _context.Customers.Count();
             AccountAmount = _context.Accounts.Count();
@@ -49,9 +54,14 @@ namespace AdminBankSystem.Pages
                 Id = r.CustomerId,
                 Name = r.Givenname,
                 Address = r.Streetaddress,
-                SocialSecurtity = r.NationalId,
+                SocialSecurity = r.NationalId,
                 City = r.City
             }).ToList();
+
+            CurrentPage = pageno;
+
+            var pageresult = _pageService.GetPages(CurrentPage);
+            PageCount = pageresult.PageCount;
         }
     }
 }
