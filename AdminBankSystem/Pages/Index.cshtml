@@ -243,13 +243,13 @@
                                     }
                                 </td>
                                 <td colspan = "2">
-                                    @for(int i = 1; i <= Model.PageCount; i++)
+                                    @for(int i = Model.CurrentPage; i <= Model.CurrentPage +5; i++)
                                     {
                                         <a class="btn btn-secondary" asp-page="/Index" asp-route-pageno="@i">@i</a>
                                     }
                                 </td>
                                  <td>
-                                     <a class="btn btn-secondary" asp-page="/Index" asp-route-pageno="@(Model.CurrentPage - 1)">Next</a>
+                                     <a class="btn btn-secondary" asp-page="/Index" asp-route-pageno="@(Model.CurrentPage + 1)">Next</a>
                                 </td>
                             </tr>
                         </tbody>

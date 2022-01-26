@@ -22,7 +22,7 @@ namespace AdminBankSystem.Pages
         public int CustomerAmount { get; set; }
         public int AccountAmount { get; set; }
         public int BalanceAmount { get; set; }
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = 1;
         public int PageCount { get; set; }
         
 
@@ -41,26 +41,34 @@ namespace AdminBankSystem.Pages
 
 
 
-        public void OnGet(int pageno)
+        public void OnGet(int pageno = 1)
         {
             CustomerAmount = _context.Customers.Count();
             AccountAmount = _context.Accounts.Count();
-            BalanceAmount = _context.Transactions.Count();
+            BalanceAmount = (int)_context.Transactions.Sum(t => t.Amount);
 
-            Customers = _context.Customers
-                .Take(50)
-                .Select(r => new CustomerViewModel
-            {
-                Id = r.CustomerId,
-                Name = r.Givenname,
-                Address = r.Streetaddress,
-                SocialSecurity = r.NationalId,
-                City = r.City
-            }).ToList();
+            //Customers = _context.Customers
+            //    .Take(50)
+            //    .Select(r => new CustomerViewModel
+            //{
+            //    Id = r.CustomerId,
+            //    Name = r.Givenname,
+            //    Address = r.Streetaddress,
+            //    SocialSecurity = r.NationalId,
+            //    City = r.City
+            //}).ToList();
 
             CurrentPage = pageno;
 
             var pageresult = _pageService.GetPages(CurrentPage);
+            Customers = pageresult.Results.Select(x => new CustomerViewModel
+            {
+                Id = x.CustomerId,
+                Name = x.Givenname,
+                Address = x.Streetaddress,
+                SocialSecurity = x.NationalId,
+                City = x.City
+            }).ToList();
             PageCount = pageresult.PageCount;
         }
     }
