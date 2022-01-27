@@ -1,4 +1,4 @@
-﻿using AdminBankSystem.Models;
+﻿using AdminBankSystem.Data;
 using AdminBankSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

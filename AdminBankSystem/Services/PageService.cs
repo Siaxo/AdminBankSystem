@@ -1,5 +1,5 @@
 ﻿using AdminBankSystem.Infastructure.Paging;
-using AdminBankSystem.Models;
+using AdminBankSystem.Data;
 
 namespace AdminBankSystem.Services
 {

@@ -1,4 +1,4 @@
-using AdminBankSystem.Models;
+using AdminBankSystem.Data;
 using AdminBankSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +21,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddTransient<DataInitializer>();
 builder.Services.AddTransient<IPageService, PageService>();
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetService<DataInitializer>().SeedData();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
