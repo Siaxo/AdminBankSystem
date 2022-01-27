@@ -5,6 +5,6 @@ namespace AdminBankSystem.Services
 {
     public interface IPageService
     {
-        PagedResult<Customer> GetPages(int pageno);
+        PagedResult<Customer> GetPages(int pageno, string searchQuery);
     }
 }

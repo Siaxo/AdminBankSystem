@@ -24,6 +24,7 @@ namespace AdminBankSystem.Pages
         public int BalanceAmount { get; set; }
         public int CurrentPage { get; set; } = 1;
         public int PageCount { get; set; }
+        public string Query { get; set; }
         
 
         public class CustomerViewModel
@@ -41,26 +42,18 @@ namespace AdminBankSystem.Pages
 
 
 
-        public void OnGet(int pageno = 1)
+        public void OnGet(string query, int pageno = 1 )
         {
             CustomerAmount = _context.Customers.Count();
             AccountAmount = _context.Accounts.Count();
             BalanceAmount = (int)_context.Transactions.Sum(t => t.Amount);
 
-            //Customers = _context.Customers
-            //    .Take(50)
-            //    .Select(r => new CustomerViewModel
-            //{
-            //    Id = r.CustomerId,
-            //    Name = r.Givenname,
-            //    Address = r.Streetaddress,
-            //    SocialSecurity = r.NationalId,
-            //    City = r.City
-            //}).ToList();
+
 
             CurrentPage = pageno;
+            Query = query;
 
-            var pageresult = _pageService.GetPages(CurrentPage);
+            var pageresult = _pageService.GetPages(CurrentPage, query);
             Customers = pageresult.Results.Select(x => new CustomerViewModel
             {
                 Id = x.CustomerId,
@@ -70,6 +63,24 @@ namespace AdminBankSystem.Pages
                 City = x.City
             }).ToList();
             PageCount = pageresult.PageCount;
+            //if (!string.IsNullOrEmpty(query))
+            //{
+            //    Customers = new List<CustomerViewModel>();
+            //    Customers.AddRange(GetCustomers(query));
+            //}
+            
+        }
+
+        private IEnumerable<CustomerViewModel> GetCustomers(string query)
+        {
+            return _context.Customers.Where(s => query == null || (s.Givenname.Contains(query) || (s.City.Contains(query)))).Select(s => new CustomerViewModel
+            {
+                Id = s.CustomerId,
+                Name = s.Givenname,
+                Address = s.Streetaddress,
+                SocialSecurity = s.NationalId,
+                City = s.City
+            }).ToList();
         }
     }
 }
