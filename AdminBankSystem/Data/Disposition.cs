@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AdminBankSystem.Models
+namespace AdminBankSystem.Data
 {
     public partial class Disposition
     {

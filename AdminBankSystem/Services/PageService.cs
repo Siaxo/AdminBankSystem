@@ -1,5 +1,5 @@
 ﻿using AdminBankSystem.Infastructure.Paging;
-using AdminBankSystem.Models;
+using AdminBankSystem.Data;
 
 namespace AdminBankSystem.Services
 {
@@ -14,7 +14,9 @@ namespace AdminBankSystem.Services
 
         public PagedResult<Customer> GetPages(int pageno)
         {
-            var query = query.GetPaged(pageno, 5);
+            var query = _context.Customers.GetPaged(pageno, 50);
+
+            return query;
              
         }
     }
