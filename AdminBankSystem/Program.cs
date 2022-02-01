@@ -20,6 +20,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 builder.Services.AddTransient<DataInitializer>();
 builder.Services.AddTransient<IPageService, PageService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ISearchService, SearchService>();
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

@@ -68,16 +68,5 @@ namespace AdminBankSystem.Pages
             
         }
 
-        private IEnumerable<CustomerViewModel> GetCustomers(string query)
-        {
-            return _context.Customers.Where(s => query == null || (s.Givenname.Contains(query) || (s.City.Contains(query)))).Select(s => new CustomerViewModel
-            {
-                Id = s.CustomerId,
-                Name = s.Givenname,
-                Address = s.Streetaddress,
-                SocialSecurity = s.NationalId,
-                City = s.City
-            }).ToList();
-        }
     }
 }

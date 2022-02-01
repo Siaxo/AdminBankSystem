@@ -1,4 +1,6 @@
 using AdminBankSystem.Data;
+using AdminBankSystem.Services;
+using AdminBankSystem.Infastructure.CustomerServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -9,14 +11,17 @@ namespace AdminBankSystem.Pages
     public class CustomerModel : PageModel
     {
         private readonly BankContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomerModel(BankContext context)
+        public CustomerModel(BankContext context, ICustomerService customerService)
         {
             _context = context;
+            _customerService = customerService;
         }
 
         public decimal Balance { get; set; }
-        public string Account { get; set; }
+        public int Account { get; set; }
+        public int AccountId { get; private set; }
 
 
         public int Id { get; set; }
@@ -25,10 +30,19 @@ namespace AdminBankSystem.Pages
         public string SocialSecurity { get; set; }
         public string City { get; set; }
 
-        public List<CustomerViewModel> Customers { get; set; }
-        public List<Account> Accounts { get; set; }
+        public class AccountViewModel
+        {
+            public int AccountId { get; set; }
+            public DateTime Created { get; set; }
+            public decimal Balance { get; set; }
+        }
 
-        public void OnGet()
+        public List<CustomerViewModel> Customers { get; set; }
+       
+        public List<AccountViewModel> Accounts { get; set; }
+
+
+        public void OnGet(int id)
         {
             Customers = _context.Customers.Select(x => new CustomerViewModel
             {
@@ -39,7 +53,17 @@ namespace AdminBankSystem.Pages
                 City = x.City
             }).ToList();
 
-            
+            AccountId = id;
+
+            var customerResult = _customerService.GetCustomer(Account, id);
+            Accounts = customerResult.Results.Select(x => new CustomerViewModel
+            {
+                Id = x.CustomerId,
+                Name = x.Givenname,
+                Address = x.Streetaddress,
+                SocialSecurity = x.NationalId,
+                City = x.City
+            }).ToList();
         }
     }
 }
