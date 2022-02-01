@@ -42,6 +42,7 @@ namespace AdminBankSystem.Pages
 
 
 
+
         public void OnGet(string query, int pageno = 1 )
         {
             CustomerAmount = _context.Customers.Count();
@@ -63,11 +64,7 @@ namespace AdminBankSystem.Pages
                 City = x.City
             }).ToList();
             PageCount = pageresult.PageCount;
-            //if (!string.IsNullOrEmpty(query))
-            //{
-            //    Customers = new List<CustomerViewModel>();
-            //    Customers.AddRange(GetCustomers(query));
-            //}
+            
             
         }
 
