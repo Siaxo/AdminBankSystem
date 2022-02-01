@@ -21,7 +21,6 @@ namespace AdminBankSystem.Pages
 
         public decimal Balance { get; set; }
         public int Account { get; set; }
-        public int AccountId { get; private set; }
 
 
         public int Id { get; set; }
@@ -56,13 +55,12 @@ namespace AdminBankSystem.Pages
             AccountId = id;
 
             var customerResult = _customerService.GetCustomer(Account, id);
-            Accounts = customerResult.Results.Select(x => new CustomerViewModel
+            Accounts = customerResult.Results.Select(x => new AccountViewModel
             {
-                Id = x.CustomerId,
-                Name = x.Givenname,
-                Address = x.Streetaddress,
-                SocialSecurity = x.NationalId,
-                City = x.City
+                AccountId = x.AccountId,
+                Created = x.Created,
+                Balance = x.Balance
+                
             }).ToList();
         }
     }
