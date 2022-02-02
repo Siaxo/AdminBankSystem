@@ -1,6 +1,5 @@
 using AdminBankSystem.Data;
 using AdminBankSystem.Services;
-using AdminBankSystem.Infastructure.CustomerServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -43,6 +42,9 @@ namespace AdminBankSystem.Pages
 
         public void OnGet(int id)
         {
+
+            
+
             var x = _context.Customers.First(x => x.CustomerId == id);
 
             Id = x.CustomerId;
@@ -64,13 +66,16 @@ namespace AdminBankSystem.Pages
                     Balance = disp.Account.Balance
                 });
             }
-            //Accounts = customerResult.Results.Select(x => new AccountViewModel
-            //{
-            //    AccountId = x.AccountId,
-            //    Created = x.Created,
-            //    Balance = x.Balance
 
-            //}).ToList();
+            
+            
         }
+
+        //public IActionResult OnGetCustomer(int personId)
+        //{
+        //    var person = _context.Customers.Where(e => e.CustomerId == personId);
+
+            
+        //}
     }
 }
