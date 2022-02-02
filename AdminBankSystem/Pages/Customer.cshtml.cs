@@ -36,32 +36,41 @@ namespace AdminBankSystem.Pages
             public decimal Balance { get; set; }
         }
 
-        public List<CustomerViewModel> Customers { get; set; }
-       
-        public List<AccountViewModel> Accounts { get; set; }
+
+
+        public List<AccountViewModel> Accounts { get; set; } = new List<AccountViewModel>();
 
 
         public void OnGet(int id)
         {
-            Customers = _context.Customers.Select(x => new CustomerViewModel
-            {
-                Id = x.CustomerId,
-                Name = x.Givenname,
-                Address = x.Streetaddress,
-                SocialSecurity = x.NationalId,
-                City = x.City
-            }).ToList();
+            var x = _context.Customers.First(x => x.CustomerId == id);
 
-            AccountId = id;
+            Id = x.CustomerId;
+            Name = x.Givenname;
+            Address = x.Streetaddress;
+            SocialSecurity = x.NationalId;
+            City = x.City;
 
-            var customerResult = _customerService.GetCustomer(Account, id);
-            Accounts = customerResult.Results.Select(x => new AccountViewModel
+
+
+
+            var customerResult = _customerService.GetCustomer(id);
+            foreach (var disp in customerResult.Dispositions)
             {
-                AccountId = x.AccountId,
-                Created = x.Created,
-                Balance = x.Balance
-                
-            }).ToList();
+                Accounts.Add(new AccountViewModel
+                {
+                    AccountId = disp.AccountId,
+                    Created = disp.Account.Created,
+                    Balance = disp.Account.Balance
+                });
+            }
+            //Accounts = customerResult.Results.Select(x => new AccountViewModel
+            //{
+            //    AccountId = x.AccountId,
+            //    Created = x.Created,
+            //    Balance = x.Balance
+
+            //}).ToList();
         }
     }
 }

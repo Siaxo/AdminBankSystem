@@ -90,10 +90,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var accounts in Model.Account)
+                                @foreach (var accounts in Model.Accounts)
                                 {
                                     <tr>
-                                        <th scope="row">@accounts.</th>
+                                        <th scope="row">@accounts.AccountId</th>
+                                        <th scope="row">@accounts.Balance</th>
+                                        <th scope="row">@accounts.Created</th>
                                         
                                     </tr>
                                 }
