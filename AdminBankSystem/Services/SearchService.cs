@@ -4,9 +4,19 @@ namespace AdminBankSystem.Services
 {
     public class SearchService : ISearchService
     {
-        public Customer SearchCustomer(int id)
+
+        private readonly BankContext _context;
+
+        public SearchService(BankContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public Customer SearchCustomer(int searchQuery)
+        {
+            var query = _context.Customers.FirstOrDefault(s => searchQuery == null || (s.CustomerId == searchQuery));
+
+            return query;
         }
     }
 }

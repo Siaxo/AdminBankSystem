@@ -160,7 +160,7 @@
                                 <tr>
                                     <th scope="row">@customer.Id</th>
                                     <td>@customer.SocialSecurity</td>
-                                    <td>@customer.Name</td>
+                                    <td>@customer.Name @customer.LastName</td>
                                     <td>@customer.Address</td>
                                     <td>@customer.City</td>
                                     <td><a asp-page="Customer" asp-route-id="@customer.Id">

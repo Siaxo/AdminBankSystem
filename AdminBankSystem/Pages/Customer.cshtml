@@ -4,73 +4,73 @@
 }
 
 
-  <main id="main" class="main">
+<main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Customers</li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
+        <h1>Profile</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Customers</li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+        </nav>
     </div><!-- End Page Title -->
 
     <section class="section profile">
-      <div class="row">
-        <div class="col-xl-4">
+        <div class="row">
+            <div class="col-xl-4">
 
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              @*<img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">*@
-              <h2>Customer Name:</h2>
-              <h2>@Model.Name</h2>
-              <h2>Social Security Number:</h2>
-              <h2>@Model.SocialSecurity</h2>
-              <h2>City:</h2>
-              <h2>@Model.City</h2>
-              <h2>Address:</h2>
-              <h2>@Model.Address</h2>
-              
-              
-              
+                        @*<img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">*@
+                        <h2>Customer Name:</h2>
+                        <h2>@Model.Name @Model.LastName</h2>
+                        <h2>Social Security Number:</h2>
+                        <h2>@Model.SocialSecurity</h2>
+                        <h2>City:</h2>
+                        <h2>@Model.City</h2>
+                        <h2>Address:</h2>
+                        <h2>@Model.Address</h2>
+
+
+
+                    </div>
+                </div>
+
             </div>
-          </div>
 
-        </div>
+            <div class="col-xl-8">
 
-        <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
 
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
-
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
-
-               
-
-              </ul>
-              <div class="tab-content pt-2">
-
-                
-                  <h5 class="card-title">Account Details</h5>
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                            </li>
 
 
-              </div><!-- End Bordered Tabs -->
 
-              <table class="table table-hover">
+                        </ul>
+                        <div class="tab-content pt-2">
+
+
+                            <h5 class="card-title">Account Details</h5>
+
+
+                        </div><!-- End Bordered Tabs -->
+
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    
+
                                     <th scope="col">Accounts</th>
                                     <th scope="col">Balance</th>
                                     <th scope="col">Created</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,16 +80,22 @@
                                         <th scope="row">@accounts.AccountId</th>
                                         <th scope="row">@accounts.Balance</th>
                                         <th scope="row">@accounts.Created</th>
-                                        
+                                        <th>
+                                            <a asp-page="Transactions" asp-route-accountId="@Model.Id">
+                                                Transactions
+                                                <i class='bx bx-money-withdraw'></i>
+                                            </a>
+                                        </th>
+
                                     </tr>
                                 }
-                                </table>
+                        </table>
+
+                    </div>
+                </div>
 
             </div>
-          </div>
-
         </div>
-      </div>
     </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->

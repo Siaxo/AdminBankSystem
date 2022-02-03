@@ -4,6 +4,6 @@ namespace AdminBankSystem.Services
 {
     public interface ISearchService
     {
-        public Customer SearchCustomer(int id);
+        public Customer SearchCustomer(int searchQuery);
     }
 }
