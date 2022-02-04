@@ -44,7 +44,7 @@ namespace AdminBankSystem.Pages
 
             var list = _context.Transactions
                 .Where(e => e.AccountId == accountId)
-                .OrderBy(e => e.Date)
+                .OrderByDescending(e => e.Date)
                 .GetPaged(pageNo, 20    ).Results
                 .Select(e => new TransactionViewModel
                 {

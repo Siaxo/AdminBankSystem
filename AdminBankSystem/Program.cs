@@ -2,7 +2,7 @@ using AdminBankSystem.Data;
 using AdminBankSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using AdminBankSystem.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ builder.Services.AddTransient<DataInitializer>();
 builder.Services.AddTransient<IPageService, PageService>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ISearchService, SearchService>();
+builder.Services.AddTransient<ITransactionService, TransactionService>();
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
