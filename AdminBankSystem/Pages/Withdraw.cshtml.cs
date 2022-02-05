@@ -7,7 +7,7 @@ using System.Transactions;
 
 namespace AdminBankSystem.Pages
 {
-    [BindProperties]
+    
     public class WithdrawModel : PageModel
     {
         private readonly BankContext _context;
@@ -22,19 +22,15 @@ namespace AdminBankSystem.Pages
             _transactionService = transactionService;
             
         }
-
+        [BindProperty]
         [Range(10, 10000)]
         public decimal Amount { get; set; }
         public decimal Balance { get; set; }
-        public DateTime DateWhen { get; set; }
 
         public string Comment { get; set; }
 
         public void OnGet()
         {
-            
-
-            Comment = "Withdrawal";
             Amount = 0;
         }
 
@@ -43,6 +39,7 @@ namespace AdminBankSystem.Pages
             var x = _context.Accounts.FirstOrDefault(x => x.AccountId == accountId);
 
             Balance = x.Balance;
+            Comment = "Withdrawal";
 
             if (Amount > Balance )
             {
@@ -52,7 +49,7 @@ namespace AdminBankSystem.Pages
             {
                 var account = _transactionService.GetAccount(accountId);
                 account.Balance -= Amount;
-                var transaction = new Data.Transaction { Amount = Amount, Date = DateWhen, Operation = Comment, Type = "Credit", Balance = account.Balance };
+                var transaction = new Data.Transaction { Amount = Amount * -1, Date = DateTime.Now, Operation = Comment, Type = "Credit", Balance = account.Balance };
                 account.Transactions.Add(transaction);
 
                 _transactionService.Update(account);
