@@ -1,0 +1,30 @@
+﻿@page
+@model AdminBankSystem.Pages.TransferModel
+@{
+}
+<main id="main" class="main">
+
+
+    <form class="row g-3" method="post">
+        <div class="col-12">
+            <label asp-for="Amount" class="form-label">Amount to Transfer</label>
+            <input class="form-control" id="inputNanme4" asp-for="Amount">
+            <span class="field-validation-error" asp-validation-for="Amount"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="Receiver" class="form-label">Reciever of transfer</label>
+            <select asp-for="Receiver" class="from-control">
+                <option value="0">Select an account</option>
+                @foreach (var account in Model.Accounts)
+                {
+                    <option value="@account.AccountId">@account.AccountId</option>
+                }    
+            </select>
+            <span class="field-validation-error" asp-validation-for="Receiver"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Transfer</button>
+        </div>
+    </form>
+
+</main>
