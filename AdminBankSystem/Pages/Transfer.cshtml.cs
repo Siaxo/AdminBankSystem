@@ -24,7 +24,6 @@ namespace AdminBankSystem.Pages
         [BindProperty]
         [Range(10, 5000)]
         public decimal Amount { get; set; }
-        public decimal Balance { get; set; }
         public DateTime DateWhen { get; set; }
         public string Comment { get; set; }
         [BindProperty]
@@ -52,7 +51,7 @@ namespace AdminBankSystem.Pages
         {
 
             var balance = _transactionService.GetAccount(accountId);
-            if (balance.Balance > Balance || Amount == 0)
+            if (balance.Balance < Amount || Amount == 0)
             {
                 ModelState.AddModelError("Amount", "Amount can't be zero or greater then the accounts balance ");
             }
@@ -63,26 +62,31 @@ namespace AdminBankSystem.Pages
             if (ModelState.IsValid)
             {
                 var account = _transactionService.GetAccount(accountId);
-                account.Balance -= Balance;
+                account.Balance -= Amount;
                 var transaction = new Transaction();
                 transaction.Date = DateTime.Now;
-                transaction.Amount = Balance;
+                transaction.Amount = Amount * -1;
                 transaction.Operation = "Transfer Withdrawal";
                 transaction.Type = "Debit";
                 account.Transactions.Add(transaction);
                 _transactionService.Update(account);
 
                 account = _transactionService.GetAccount(Receiver);
-                account.Balance += Balance;
+                account.Balance += Amount;
                 transaction = new Transaction();
                 transaction.Date = DateTime.Now;
-                transaction.Amount = Balance;
+                transaction.Amount = Amount;
                 transaction.Operation = "Transfer Deposit";
                 transaction.Type = "Debit";
                 account.Transactions.Add(transaction);
                 _transactionService.Update(account);
                 return RedirectToPage("Index");
             }
+
+            Accounts = _transactionService.GetAll().Select(x => new AccountViewModel
+            {
+                AccountId = x.AccountId
+            }).ToList();
 
             return Page();
 

@@ -1,5 +1,6 @@
 using AdminBankSystem.Data;
 using AdminBankSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -7,6 +8,7 @@ using static AdminBankSystem.Pages.IndexModel;
 
 namespace AdminBankSystem.Pages
 {
+    [Authorize(Roles = "Admin, Cashier")]
     public class CustomerModel : PageModel
     {
         private readonly BankContext _context;
