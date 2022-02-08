@@ -51,7 +51,7 @@ namespace AdminBankSystem.Pages
         {
 
             var balance = _transactionService.GetAccount(accountId);
-            if (balance.Balance < Amount || Amount == 0)
+            if (balance.Balance < Amount || Amount < 1)
             {
                 ModelState.AddModelError("Amount", "Amount can't be zero or greater then the accounts balance ");
             }
