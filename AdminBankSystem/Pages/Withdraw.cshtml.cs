@@ -41,9 +41,9 @@ namespace AdminBankSystem.Pages
             Balance = x.Balance;
             Comment = "Withdrawal";
 
-            if (Amount > Balance )
+            if (Amount > Balance || Amount == 0 )
             {
-                ModelState.AddModelError("Amount", "Amount can't be greater then the accounts balance ");
+                ModelState.AddModelError("Amount", "Amount can't be zero or greater then the accounts balance ");
             }
             if (ModelState.IsValid)
             {
